@@ -1,1 +1,90 @@
+# ==========================================================
+# Task 1: Python File Handling & Automation
+# Author: Sharan Kumar R
+# Description:
+# Demonstrates file handling, automation, and exception handling.
+# ==========================================================
 
+import os
+import shutil
+import csv
+
+try:
+    # ----------------------------------------
+    # Create and write to a text file
+    # ----------------------------------------
+    with open("sample.txt", "w") as file:
+        file.write("Hello World!\n")
+        file.write("Welcome to Python File Handling.\n")
+
+    print("sample.txt created successfully.")
+
+    # ----------------------------------------
+    # Read the text file
+    # ----------------------------------------
+    with open("sample.txt", "r") as file:
+        print("\nContents of sample.txt:")
+        print(file.read())
+
+    # ----------------------------------------
+    # Create and write to a CSV file
+    # ----------------------------------------
+    with open("students.csv", "w", newline="") as file:
+        writer = csv.writer(file)
+
+        # Header row
+        writer.writerow(["ID", "Name", "Department"])
+
+        # Data rows
+        writer.writerow([1, "Alice", "AI"])
+        writer.writerow([2, "Bob", "Cyber Security"])
+        writer.writerow([3, "Charlie", "Data Science"])
+
+    print("students.csv created successfully.")
+
+    # ----------------------------------------
+    # Read the CSV file
+    # ----------------------------------------
+    print("\nContents of students.csv:")
+
+    with open("students.csv", "r") as file:
+        reader = csv.reader(file)
+
+        for row in reader:
+            print(row)
+
+    # ----------------------------------------
+    # Rename the text file
+    # ----------------------------------------
+    os.rename("sample.txt", "renamed_sample.txt")
+    print("\nFile renamed successfully.")
+
+    # ----------------------------------------
+    # Create Backup folder if it doesn't exist
+    # ----------------------------------------
+    if not os.path.exists("Backup"):
+        os.mkdir("Backup")
+
+    # ----------------------------------------
+    # Move renamed file to Backup folder
+    # ----------------------------------------
+    shutil.move("renamed_sample.txt", "Backup")
+    print("File moved to Backup folder.")
+
+    # ----------------------------------------
+    # Delete CSV file
+    # ----------------------------------------
+    os.remove("students.csv")
+    print("students.csv deleted successfully.")
+
+except FileNotFoundError:
+    print("Error: File not found.")
+
+except PermissionError:
+    print("Error: Permission denied.")
+
+except Exception as e:
+    print("Unexpected Error:", e)
+
+finally:
+    print("\nProgram executed successfully.")
